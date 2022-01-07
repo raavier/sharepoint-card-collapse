@@ -1,7 +1,10 @@
 declare interface ICardCollapseWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  DescriptionFieldLabelTitle: string;
+  DescriptionFieldLabelIcon: string;
+  DescriptionFieldLabelResponsable: string;
+  DescriptionFieldLabelCollapse: string;
 }
 
 declare module 'CardCollapseWebPartStrings' {

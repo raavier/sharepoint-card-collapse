@@ -1,3 +1,9 @@
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+
 export interface ICardCollapseProps {
-  description: string;
+  title:string;
+  icon:string;
+  responsable:string;
+  collapsedText: string;
+  spcontext:WebPartContext;
 }
