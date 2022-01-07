@@ -12,7 +12,10 @@ import CardCollapse from './components/CardCollapse';
 import { ICardCollapseProps } from './components/ICardCollapseProps';
 
 export interface ICardCollapseWebPartProps {
-  description: string;
+  title:string;
+  icon:string;
+  responsable:string;
+  collapsedText: string;
 }
 
 export default class CardCollapseWebPart extends BaseClientSideWebPart<ICardCollapseWebPartProps> {
@@ -21,7 +24,11 @@ export default class CardCollapseWebPart extends BaseClientSideWebPart<ICardColl
     const element: React.ReactElement<ICardCollapseProps> = React.createElement(
       CardCollapse,
       {
-        description: this.properties.description
+        title:this.properties.title,        
+        icon:this.properties.icon,
+        responsable:this.properties.responsable,
+        collapsedText: this.properties.collapsedText,
+        spcontext:this.context
       }
     );
 
@@ -47,8 +54,17 @@ export default class CardCollapseWebPart extends BaseClientSideWebPart<ICardColl
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('title', {
+                  label: strings.DescriptionFieldLabelTitle
+                }),
+                PropertyPaneTextField('icon', {
+                  label: strings.DescriptionFieldLabelIcon
+                }),
+                PropertyPaneTextField('responsable', {
+                  label: strings.DescriptionFieldLabelResponsable
+                }),
+                PropertyPaneTextField('collapsedText', {
+                  label: strings.DescriptionFieldLabelCollapse
                 })
               ]
             }
