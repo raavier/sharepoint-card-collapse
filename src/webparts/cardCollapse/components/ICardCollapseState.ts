@@ -9,5 +9,5 @@ export interface ICardCollapseState {
     collapsedText: string; */
     items:IItem[];
     expandedItem:IExpanded[];
- };
+ }
     

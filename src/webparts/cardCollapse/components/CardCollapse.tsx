@@ -46,10 +46,10 @@ export default class CardCollapse extends React.Component<ICardCollapseProps, IC
   }
   
   public handleExpandClick = (index) => {
-    let expandedItems = [...this.state.expandedItem]
-    let expandedItem = {...expandedItems[index]}
-    expandedItem.expanded = !expandedItem.expanded
-    expandedItems[index] =expandedItem
+    let expandedItems = [...this.state.expandedItem];
+    let expandedItem = {...expandedItems[index]};
+    expandedItem.expanded = !expandedItem.expanded;
+    expandedItems[index] =expandedItem;
     this.setState({
       expandedItem:expandedItems,
     })
@@ -59,30 +59,34 @@ export default class CardCollapse extends React.Component<ICardCollapseProps, IC
     const items: IItem[] = await sp.web.lists.getByTitle("Home Collapse Cards").items.get();
     items.map((item) => (
       this.state.expandedItem.push({Id:item.Id,expanded:false})
-    ))
+    ));
     this.setState({items:items});
+    items.map((item)=> {console.log('teste',item.link.Url)})
   }
   
   public render(): React.ReactElement<ICardCollapseProps> {
     return (
       <InitialContainer>
         <TitleContainer>Acesso Rápido</TitleContainer>
-          {this.state.items.map((item:IItem,index:number) =>(
-          <AccordionFirstWrapper>
-            <AccordionWrapper>
-              <LinkText href="www.google.com">{item.Title}</LinkText>
-              <ContainerButton onClick={() => this.handleExpandClick(index)}>
-                  +
-              </ContainerButton>
-          </AccordionWrapper>
-          <InternalWrapper open={this.state.expandedItem[index] ? this.state.expandedItem[index].expanded : null}>
-            <StrongText>Descrição:</StrongText>
-            <TextCollapesed>{item.collapsedtext}</TextCollapesed>
-            <strong>Responsável:</strong>
-            <TextCollapesed>{item.responsable}</TextCollapesed>
-          </InternalWrapper>
-       </AccordionFirstWrapper>)
-        )} 
+          <ResponsiveContainer>
+            {this.state.items.map((item:IItem,index:number) =>(
+            <AccordionFirstWrapper>
+              <AccordionWrapper>
+                <LinkText href={item.link.Url}>{item.Title}</LinkText>
+                <ContainerButton onClick={() => this.handleExpandClick(index)}>
+                    +
+                </ContainerButton>
+              </AccordionWrapper>
+              <InternalWrapper open={this.state.expandedItem[index] ? this.state.expandedItem[index].expanded : null}>
+                <StrongText>Descrição:</StrongText>
+                <TextCollapesed>{item.collapsedtext}</TextCollapesed>
+                <strong>Responsável:</strong>
+                <TextCollapesed>{item.responsable}</TextCollapesed>
+              </InternalWrapper>
+            </AccordionFirstWrapper>)
+          )} 
+          </ResponsiveContainer>
+          
       </InitialContainer>
       
     );
@@ -91,7 +95,12 @@ export default class CardCollapse extends React.Component<ICardCollapseProps, IC
 
 const StrongText =styled.strong`
   padding-top:15px;
-`
+`;
+const ResponsiveContainer = styled.div`
+  display:flex;
+  flex-wrap:wrap
+`;
+
 
 const ContainerButton = styled.div`
   float: right;
@@ -116,7 +125,7 @@ const ContainerButton = styled.div`
   -webkit-box-direction: normal;
   position:relative;
   right:-10px;
-`
+`;
 
 const LinkText = styled.a`
   color: #707070;
@@ -147,7 +156,7 @@ const LinkText = styled.a`
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
-`
+`;
 
 const InitialContainer = styled.div`
     background: #fff 0 0 no-repeat padding-box;
@@ -156,25 +165,26 @@ const InitialContainer = styled.div`
     border-radius: 4px;
     display: inline-block;
     width: 100%;
-`
+`;
 
 const TitleContainer = styled.h3`
     letter-spacing: 0;
     color: #007e7a;
-    font-size: 18px;
+    font-size: 24px;
     border-left: 3px solid #edb111;
     padding-left: 20px;
     margin: 20px 0;
     font-family: CaeciliaLTStd-Roman;
-`
+    font-weight:bolder;
+`;
 const AccordionFirstWrapper = styled.div`
     display: flex;
     -webkit-box-direction: normal;
     position: relative;
     text-decoration: none;
-    margin: 8px 20px;
+    margin: 12px 20px;
     background: #fbfbfb 0 0 no-repeat padding-box;
-    border: 1px solid #f1f1f1;
+    border: 2px solid #f1f1f1c5;
     border-radius: 4px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -182,9 +192,9 @@ const AccordionFirstWrapper = styled.div`
     -webkit-box-orient: vertical;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: calc(100% - 40px);
+    width: calc(300px);
     font-family: CaeciliaLTStd-Roman;
-`
+`;
 
 
 const AccordionWrapper = styled.div`
@@ -218,6 +228,7 @@ const AccordionWrapper = styled.div`
 const InternalWrapper = styled.div`
     width: 90%;
     max-height: ${(props) => (props.open ? '500px' : '0')};
+    height: ${(props) => (props.open ? 'auto' : '70px')};
     transition: all 0.4s ease-in-out;
     overflow: hidden;
     border-top: 1px solid #f1f1f1;
@@ -234,8 +245,7 @@ const TextCollapesed = styled.p`
     padding-right:25px;
     font-family: MyriadPro-Regular;
     color: #707070;
-
-`
+`;
 
 /* 
 const ExpandMore = styled((props) => {
